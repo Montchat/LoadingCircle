@@ -9,11 +9,12 @@ let currentPage = XCPlaygroundPage.currentPage
 //Class that creates a custom background view with color and height
 class CircleView : UIView {
     
+    typealias X = CGFloat; typealias Y = CGFloat
     typealias Height = CGFloat ; typealias Width = CGFloat
     
-    init(height:Height, width:Width, color: UIColor) {
+    init(x:X, y:Y, height:Height, width:Width, color: UIColor) {
         
-        super.init(frame: CGRect(x: 0, y: 0, width: width, height: height))
+        super.init(frame: CGRect(x: x, y: y, width: width, height: height))
         
         self.backgroundColor = color
         self.layer.cornerRadius = width / 2
@@ -28,33 +29,35 @@ class CircleView : UIView {
 
 let color = UIColor(red: 0.41, green: 0.41, blue: 0.41, alpha: 0.90)
 
-let backgroundView = CircleView(height: 300, width: 300, color: color)
+let backgroundView = CircleView(x: 0, y: 0, height: 300, width: 300, color: color)
 
 currentPage.liveView = backgroundView
 currentPage.needsIndefiniteExecution = true
 
-func addCirclesToView(view:UIView, count: CGFloat) {
+func addCirclesToView(view:UIView, count: CGFloat) -> [CircleView] {
     
-//    let circleViews[CircleView] = []
+    var circleViews:[CircleView] = []
     
-    for var i in 1 ... Int(count) {
+    for i in 1 ... Int(count) {
         
-        let circleX = view.frame.width / count * CGFloat(i) - (view.frame.width / count / 2)
+        let x = view.frame.width / count * CGFloat(i) - (view.frame.width / count / 2)
+        let y = view.center.y
         
-        let circlePath = UIBezierPath(arcCenter: CGPoint(x: circleX, y: view.frame.midY), radius: CGFloat(view.frame.width / count / 4), startAngle: CGFloat(0), endAngle:CGFloat(M_PI * 2), clockwise: true)
+        let width = view.frame.width / count / 2
+        let height = width
         
-        let shapeLayer = CAShapeLayer()
-        shapeLayer.path = circlePath.CGPath
+        let circle = CircleView(x: 0, y: 0, height: height, width: width, color: UIColor.whiteColor())
         
-        shapeLayer.fillColor = UIColor.whiteColor().CGColor
-        shapeLayer.strokeColor = UIColor.whiteColor().CGColor
-        shapeLayer.lineWidth = 3.0
+        circle.center.x = x
+        circle.center.y = y
         
-        backgroundView.layer.addSublayer(shapeLayer)
+        circleViews.append(circle)
         
-        i += 1
+        view.addSubview(circle)
         
     }
+    
+    return circleViews
     
 }
 
