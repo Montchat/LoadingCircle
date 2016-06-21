@@ -62,10 +62,24 @@ func addCirclesToView(view:UIView, count: CGFloat, color:UIColor) -> [CircleView
     
 }
 
+func animateViewsSequentially(views views: [UIView], duration: Double) {
+    
+    for view in views {
+        
+        UIView.animateWithDuration(duration, delay: 0, options: [.Autoreverse,.Repeat], animations: {
+            view.alpha = 0
+            
+            }, completion: { (Bool) in
+                print("working")
+        })
+        
+    }
+    
+}
 
-addCirclesToView(backgroundView, count: 10, color: color)
+let circleViews = addCirclesToView(backgroundView, count: 10, color: color)
 
-
+animateViewsSequentially(views: circleViews, duration: 0.33)
 
 
 
