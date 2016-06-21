@@ -5,16 +5,18 @@ import XCPlayground
 
 let currentPage = XCPlaygroundPage.currentPage
 
-class RoundedView : UIView {
+
+//Class that creates a custom background view with color and height
+class CircleView : UIView {
     
-    typealias Height = CGFloat ; typealias Width = CGFloat ; typealias CornerRadius = CGFloat
+    typealias Height = CGFloat ; typealias Width = CGFloat
     
-    init(height:Height, width:Width, color: UIColor, cornerRadius:CornerRadius) {
+    init(height:Height, width:Width, color: UIColor) {
         
         super.init(frame: CGRect(x: 0, y: 0, width: width, height: height))
         
         self.backgroundColor = color
-        self.layer.cornerRadius = cornerRadius
+        self.layer.cornerRadius = width / 2
         
     }
     
@@ -26,12 +28,14 @@ class RoundedView : UIView {
 
 let color = UIColor(red: 0.41, green: 0.41, blue: 0.41, alpha: 0.90)
 
-let backgroundView = RoundedView(height: 300, width: 300, color: color, cornerRadius: 10)
+let backgroundView = CircleView(height: 300, width: 300, color: color)
 
 currentPage.liveView = backgroundView
 currentPage.needsIndefiniteExecution = true
 
 func addCirclesToView(view:UIView, count: CGFloat) {
+    
+//    let circleViews[CircleView] = []
     
     for var i in 1 ... Int(count) {
         
@@ -39,15 +43,11 @@ func addCirclesToView(view:UIView, count: CGFloat) {
         
         let circlePath = UIBezierPath(arcCenter: CGPoint(x: circleX, y: view.frame.midY), radius: CGFloat(view.frame.width / count / 4), startAngle: CGFloat(0), endAngle:CGFloat(M_PI * 2), clockwise: true)
         
-        
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = circlePath.CGPath
         
-        //change the fill color
         shapeLayer.fillColor = UIColor.whiteColor().CGColor
-        //you can change the stroke color
         shapeLayer.strokeColor = UIColor.whiteColor().CGColor
-        //you can change the line width
         shapeLayer.lineWidth = 3.0
         
         backgroundView.layer.addSublayer(shapeLayer)
@@ -58,7 +58,8 @@ func addCirclesToView(view:UIView, count: CGFloat) {
     
 }
 
-addCirclesToView(backgroundView, count: 3)
+addCirclesToView(backgroundView, count: 6)
+
 
 
 
