@@ -5,20 +5,39 @@ import XCPlayground
 
 let currentPage = XCPlaygroundPage.currentPage
 
-let backgroundView = UIView(frame: CGRect(x: 0, y: 0, width: 300, height: 300))
-backgroundView.backgroundColor = UIColor(red: 0.41, green: 0.41, blue: 0.41, alpha: 0.90)
-backgroundView.layer.masksToBounds = true
-backgroundView.layer.cornerRadius = 10
+class RoundedView : UIView {
+    
+    typealias Height = CGFloat ; typealias Width = CGFloat ; typealias CornerRadius = CGFloat
+    
+    init(height:Height, width:Width, color: UIColor, cornerRadius:CornerRadius) {
+        
+        super.init(frame: CGRect(x: 0, y: 0, width: width, height: height))
+        
+        self.backgroundColor = color
+        self.layer.cornerRadius = cornerRadius
+        
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+}
+
+let color = UIColor(red: 0.41, green: 0.41, blue: 0.41, alpha: 0.90)
+
+let backgroundView = RoundedView(height: 300, width: 300, color: color, cornerRadius: 10)
 
 currentPage.liveView = backgroundView
-
 currentPage.needsIndefiniteExecution = true
 
 func addCirclesToView(view:UIView, count: CGFloat) {
     
     for var i in 1 ... Int(count) {
         
-        let circlePath = UIBezierPath(arcCenter: CGPoint(x: (view.frame.width / count) * CGFloat(i) / 2 , y: view.frame.midY), radius: CGFloat(view.frame.width / count / 4), startAngle: CGFloat(0), endAngle:CGFloat(M_PI * 2), clockwise: true)
+        let circleX = view.frame.width / count * CGFloat(i) - (view.frame.width / count / 2)
+        
+        let circlePath = UIBezierPath(arcCenter: CGPoint(x: circleX, y: view.frame.midY), radius: CGFloat(view.frame.width / count / 4), startAngle: CGFloat(0), endAngle:CGFloat(M_PI * 2), clockwise: true)
         
         
         let shapeLayer = CAShapeLayer()
@@ -39,7 +58,21 @@ func addCirclesToView(view:UIView, count: CGFloat) {
     
 }
 
-addCirclesToView(backgroundView, count: 2)
+addCirclesToView(backgroundView, count: 3)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
