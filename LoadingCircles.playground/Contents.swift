@@ -28,13 +28,14 @@ class CircleView : UIView {
 }
 
 let color = UIColor(red: 0.41, green: 0.41, blue: 0.41, alpha: 0.90)
+let whiteColor = UIColor.whiteColor()
 
 let backgroundView = CircleView(x: 0, y: 0, height: 300, width: 300, color: color)
 
 currentPage.liveView = backgroundView
 currentPage.needsIndefiniteExecution = true
 
-func addCirclesToView(view:UIView, count: CGFloat) -> [CircleView] {
+func addCirclesToView(view:UIView, count: CGFloat, color:UIColor) -> [CircleView] {
     
     var circleViews:[CircleView] = []
     
@@ -46,7 +47,7 @@ func addCirclesToView(view:UIView, count: CGFloat) -> [CircleView] {
         let width = view.frame.width / count / 2
         let height = width
         
-        let circle = CircleView(x: 0, y: 0, height: height, width: width, color: UIColor.whiteColor())
+        let circle = CircleView(x: 0, y: 0, height: height, width: width, color: whiteColor)
         
         circle.center.x = x
         circle.center.y = y
@@ -61,7 +62,9 @@ func addCirclesToView(view:UIView, count: CGFloat) -> [CircleView] {
     
 }
 
-addCirclesToView(backgroundView, count: 6)
+
+addCirclesToView(backgroundView, count: 10, color: color)
+
 
 
 
